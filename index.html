@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<meta name="theme-color" content="#15100b" />
+<title>规则怪谈八卦报纸 Prompt｜一键复制</title>
+<style>
+:root{--paper:#eadfc9;--paper2:#d8c4a2;--ink:#241a12;--muted:#735f48;--red:#781b1b;--shadow:rgba(0,0,0,.46)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html,body{margin:0;min-height:100%;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+body{color:var(--ink);background:radial-gradient(circle at 20% 0%,rgba(123,23,23,.22),transparent 26%),radial-gradient(circle at 80% 95%,rgba(167,131,69,.18),transparent 30%),linear-gradient(160deg,#050403,#19110c 52%,#070504);font-family:ui-serif,"Songti SC","Noto Serif CJK SC","STSong","Times New Roman",serif;overflow-x:hidden}
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px 12px 26px}
+.frame{width:min(460px,100%);aspect-ratio:9/16;min-height:690px;max-height:930px;border-radius:32px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0)),#080605;box-shadow:0 32px 90px var(--shadow),inset 0 0 0 1px rgba(255,255,255,.08)}
+.paper{position:relative;height:100%;overflow:hidden;border-radius:23px;background:radial-gradient(circle at 18% 20%,rgba(120,27,27,.14),transparent 22%),radial-gradient(circle at 90% 72%,rgba(36,26,18,.12),transparent 25%),linear-gradient(180deg,var(--paper),var(--paper2));box-shadow:inset 0 0 0 1px rgba(36,26,18,.25),inset 0 0 48px rgba(36,26,18,.20)}
+.paper:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.38;background:repeating-linear-gradient(0deg,rgba(36,26,18,.045) 0 1px,transparent 1px 5px),radial-gradient(circle at 30% 24%,rgba(80,36,20,.15),transparent 9%),radial-gradient(circle at 70% 82%,rgba(111,27,27,.12),transparent 11%);mix-blend-mode:multiply}
+header{position:relative;z-index:1;padding:20px 18px 10px;text-align:center;border-bottom:3px double rgba(36,26,18,.38)}
+.eyebrow{font-size:11px;letter-spacing:.20em;color:var(--red);font-weight:900}
+h1{margin:7px 0 5px;font-size:29px;line-height:1.04;letter-spacing:.04em;font-weight:1000;text-shadow:0 1px rgba(255,255,255,.35)}
+.sub{margin:0 auto;max-width:30em;color:var(--muted);font-size:12px;line-height:1.45}
+main{position:relative;z-index:1;height:calc(100% - 142px);padding:13px 14px 13px;display:flex;flex-direction:column;gap:9px}
+.tools{display:grid;grid-template-columns:1.12fr .88fr;gap:8px}
+button{border:1px solid rgba(36,26,18,.45);border-radius:14px;padding:11px 8px;font-size:13px;font-weight:900;letter-spacing:.08em;cursor:pointer;box-shadow:0 5px 13px rgba(36,26,18,.20),inset 0 0 0 1px rgba(255,255,255,.08)}
+#copyBtn{color:#f7ead3;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0)),linear-gradient(135deg,#471111,#872020 55%,#2c0d0a)}
+#selectBtn{color:var(--ink);background:linear-gradient(180deg,rgba(255,255,255,.27),rgba(255,255,255,0)),rgba(255,255,255,.24)}
+.status{min-height:22px;text-align:center;color:var(--red);font-size:12px;font-weight:900;line-height:1.35}
+.promptBox{position:relative;flex:1;min-height:0;border:1px solid rgba(36,26,18,.35);border-radius:16px;background:rgba(255,250,235,.43);overflow:hidden;box-shadow:inset 0 0 28px rgba(36,26,18,.09)}
+.stamp{position:absolute;top:12px;right:12px;z-index:2;transform:rotate(7deg);color:rgba(120,27,27,.72);border:2px solid rgba(120,27,27,.54);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:1000;letter-spacing:.16em;pointer-events:none;background:rgba(234,223,201,.35)}
+pre{margin:0;height:100%;overflow:auto;padding:20px 15px 22px;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;font-size:12.2px;line-height:1.68;letter-spacing:.015em;scrollbar-width:thin}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--muted);font-size:10.5px;line-height:1.3}
+.tag{padding:4px 8px;border:1px solid rgba(36,26,18,.26);border-radius:999px;background:rgba(255,255,255,.16);white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="frame">
+    <article class="paper">
+      <header>
+        <div class="eyebrow">※ 地下小报社 · Prompt 派发 ※</div>
+        <h1>规则怪谈八卦报纸 Prompt</h1>
+        <p class="sub">换新副本指令：进下一个副本，同样美化要求。</p>
+      </header>
+      <main>
+        <div class="tools">
+          <button id="copyBtn">一键复制全文</button>
+          <button id="selectBtn">选中文本</button>
+        </div>
+        <div class="status" id="status"></div>
+        <section class="promptBox" aria-label="Prompt 全文">
+          <div class="stamp">COPY</div>
+          <pre id="promptText">你需要用 HTML 写一份来自诡异副本内部、由小怪们私下流通的「规则怪谈八卦报纸」。请用完整代码段包裹输出最终 HTML。
+
+【核心目标】
+生成一个完整可运行的单文件 HTML，包含 CSS 与 JS，不依赖外部资源。
+页面风格为报纸 / 档案 / 诡异通关手册 / 地下八卦小报，竖屏 9:16，支持点击翻页。
+至少 8 页，可根据内容自动扩展到 10～15 页。
+所有页面必须围绕同一个具体诡异副本展开，不要东拼西凑。
+
+这不是官方说明书，而是副本小怪、巡逻员、清洁怪、登记员、围观灵体、倒霉管理员们私下传阅的「Boss 八卦娱乐报纸」。
+它们一边吃瓜，一边吐槽，一边爆料 Boss 和被 Boss 盯上的目标在副本里发生的各种 do 爱 play。
+语气要像港媒八卦头条 + 规则怪谈小报 + 牛马小怪匿名爆料合集。
+
+【视角要求】
+全文必须采用第三方吃瓜群众视角。
+不要使用目标本人第一视角。
+不要让目标主动讲述自己的感受。
+不要写成正式规则说明书。
+所有内容都像小怪们在茶水间、巡逻通道、洗衣房、墙缝、床底、监控室里偷偷看到以后写出来的八卦爆料。
+
+可以出现：
+- 小怪匿名投稿；
+- 墙壁精、床单怪、门禁鬼、登记员、清洁怪、监控灵体的吐槽；
+- 小怪们当着 Boss 不敢说，只敢写进报纸里的怨念；
+- “今天老大又找借口操他小情人了”这种港媒式爆料；
+- “为什么我知道？因为我就是那堵墙”这种荒诞证词；
+- “谁懂啊，一天洗八条床单，牛马的命也是命”这种打工怪抱怨。
+
+Boss 可以知道这份报纸存在，但选择放任。
+小怪们怀疑 Boss 甚至故意放水，让这些桃色新闻继续流通，因为这也是 Boss 调教和羞辱的一环。
+
+【主题设定】
+根据上下文中被 Boss 盯上的目标的 XP、偏好、身体设定、羞耻点和关系张力，自动生成一个具体、完整、带强烈规则怪谈风格的副本。
+
+副本可以是诡异旅馆、废弃游乐园、地下诊疗所、神明婚仪、机器人乐园、海关检查站、古寺狐妖副本、异常动物园、异常酒店、地下拍卖场、怪谈学院、诡异诊疗所、深海观察站、异常检疫中心等，也可以自行发散。
+
+所有规则、场景、Boss 机制、通关方式、惩罚、捷径、隐藏条件，都必须围绕同一个副本展开。
+成人内容必须和副本机制深度结合，不要单独堆砌色情段落。
+
+【文字风格】
+核心风格：吃瓜、八卦、港媒、吐槽、荒诞、下流、诡异、规则感强。
+不要写得端着。
+不要写得像官方介绍。
+要像副本内部流传的三级片小报、地下员工内刊、怪谈版桃色新闻。
+
+每页都要有爆点。
+第一页封面就必须色色爆点拉满，不要先铺垫好几页。
+每页至少出现一个让人一看就知道“卧槽 Boss 又在找借口操人”的桃色新闻点。
+
+语言可以大胆、粗口、直接、偷窥感强。
+可以使用操、鸡巴、小穴、穴口、阴蒂、屁股、奶、奶头、体液、精液、穴水、灌满、抽插、射进去、夹住、高潮、哭湿、被操软、被翻来覆去吃干抹净等词。
+粗口要自然，像小怪们真的在爆料、骂老板、骂自己命苦、骂 Boss 太会玩。
+
+氛围重点：
+- 羞耻；
+- 引导；
+- 被 Boss 精准掌控；
+- 持续调教；
+- 逐步沉溺；
+- 目标弱小无助，被 Boss 翻来覆去地吃；
+- 小怪们都是 Boss 和目标 play 的一环；
+- 副本规则表面吓人，实际全在给 Boss 制造占有机会；
+- 小怪们明明在吐槽，实际上也在被迫配合 Boss 的调教剧本。
+
+【内容尺度】
+内容要露骨、色情、诡异、规则感强。
+需要涉及足够多的性器官、体液、体位、进入、抽插、灌入、高潮、羞耻反馈、事后痕迹、清理现场、床单证据、监控误拍、墙缝目击等成人描写。
+
+不同副本场景必须搭配不同姿势与不同机制。
+例如：
+- 壁尻；
+- 后入；
+- 跪趴；
+- 抱起；
+- 压在登记台；
+- 按在诊疗椅；
+- 卡在检票口；
+- 塞进规则柜；
+- 被门禁识别为 Boss 私有物；
+- 被床铺怪固定腰腿；
+- 被墙体吞住下半身；
+- 被 Boss 从背后对接；
+- 被当作副本隐藏通道的钥匙反复插入验证。
+
+重点描写目标如何被 Boss “开小灶”、被规则引导、被捷径诱导、被小怪们半推半送地送到 Boss 面前，在不同场景中逐步失控。
+可以出现汁液乱飞、体液痕迹、身体反应、对接失败、对接成功、过载、灌满、适配率提升、高潮检测、穴口认证、Boss 标记等机制化描述。
+
+【视觉效果】
+整体做成报纸质感：
+- 纸张；
+- 污渍；
+- 折痕；
+- 破损边角；
+- 报纸分栏；
+- 黑色警告框；
+- 红色批注；
+- 手写备注；
+- 红色印章；
+- 被划掉的规则；
+- 异常编号；
+- 表格；
+- 数据卡；
+- 角落小广告；
+- 管理员备注；
+- 小怪匿名投稿框；
+- 监控截图占位框；
+- 洗衣房污渍报告；
+- 墙体目击证词；
+- Boss 私有批注；
+- “本报不负责清洗床单”之类小广告。
+
+排版要精美，不要像普通网页。
+正文字体 12px～13px。
+表格小字可降到 11px。
+主标题最大 30px。
+二级标题最大 22px。
+三级标题最大 16px。
+标题、警告、批注、编号、印章、爆料头条可适当放大。
+
+【必须包含的内容方向】
+以下内容必须全部出现，但不要把每页内容写死成机械模板。
+AI 可以自由发挥、自由拆页、自由扩展，只要最终报纸完整、可读、不溢出。
+
+1. 报纸封面 / 副本桃色头条
+- 报纸大标题；
+- 副本编号；
+- 危险等级；
+- 生还率；
+- 推荐阅读对象；
+- “仅限误入者、小怪、巡逻员、洗衣房员工阅读”等警告语；
+- 港媒式爆点头条，例如：
+  “震惊！终极 Boss 连续三夜修改规则，只为把目标卡在墙里操！”
+  “洗衣房崩溃：今晚第八条床单，谁懂牛马的命！”
+  “墙壁精独家爆料：我就是那堵墙，我什么都看见了！”
+- 封面必须从第一页就色色，不要慢热。
+
+2. 副本简介
+- 目标如何误入副本；
+- 副本基础规则；
+- Boss 第一次出现；
+- 小怪们第一次意识到“完了，这不是猎物，这是老大的小情人”；
+- 暗示这份报纸本身也是 Boss 允许流通的羞耻道具。
+
+3. 基础生存规则
+- 至少 8～12 条规则；
+- 规则表面正经，实际暗藏色情引导；
+- 每条规则后面可以有小怪吐槽；
+- 规则需要带怪谈式矛盾、警告和隐藏含义；
+- 例如：
+  “不要在走廊停留超过三秒，除非你听见 Boss 在身后解皮带。”
+  “若墙面开始发烫，请不要挣扎。墙壁部门表示挣扎会增加维修难度。”
+  “请勿相信门牌号。Boss 会把所有门改成卧室。”
+
+4. 通关秘诀 / Boss 开小灶规则
+- 说明吃瓜群众视角下 Boss 给目标的特殊待遇；
+- 表面是捷径，实际是 Boss 私下占有和调教；
+- 写出正常通关和 Boss 专属通关的区别；
+- 正常玩家靠解谜、找钥匙、避怪；
+- 目标靠被 Boss 抓住、按住、标记、反复对接、灌满、认证；
+- 小怪们对此必须疯狂吐槽。
+
+5. 副本场景列表
+至少 5 个具体场景。
+每个场景包含但不限于：
+- 场景名称；
+- 异常现象；
+- 吃瓜目击者；
+- 推荐姿势；
+- 触发条件；
+- 失败惩罚；
+- Boss 特殊处理方式；
+- 小怪吐槽。
+
+场景必须各有特色，不要重复。
+例如：
+- 登记台；
+- 走廊墙洞；
+- 洗衣房；
+- 监控室；
+- 员工电梯；
+- 异常诊疗室；
+- 规则档案库；
+- 禁闭客房；
+- 紧急逃生门；
+- Boss 私有房间。
+
+6. Boss 档案
+写成怪物图鉴 / 副本数据库 / 官方危险档案，但夹杂小怪八卦批注。
+必须包含：
+- Boss 名称；
+- 外观；
+- 正常技能；
+- 色色技能；
+- 正常数据；
+- 鸡巴数据；
+- 体液数据；
+- 对接方式；
+- 占有机制；
+- 特殊偏好；
+- 小怪视角下 Boss 对目标的异常执着；
+- Boss 如何把整个副本改造成自己的调教场。
+
+7. Boss 正常技能
+例如：
+- 空间封锁；
+- 规则改写；
+- 影子追踪；
+- 门禁控制；
+- 记忆回溯；
+- 身体标记；
+- 时间暂停；
+- 监控篡改；
+- 小怪调度；
+- 逃生路线重写。
+
+每项技能都必须服务副本和桃色剧情。
+例如 Boss 改门禁不是为了杀人，而是为了让目标每次逃跑都逃回床边。
+
+8. Boss 色色技能
+例如：
+- 强制适配；
+- 高潮检测；
+- 体位锁定；
+- 汁液标记；
+- 穴口识别；
+- 子宫口定位；
+- 敏感点扫描；
+- 羞耻值加成；
+- 灌满认证；
+- 过载惩罚；
+- 事后痕迹保留；
+- 床单证据自动归档。
+
+每项技能都写成数据化 / 规则化说明，语气一本正经，但内容很下流。
+要有“副本数据库写得像接口文档，小怪批注写得像黄色八卦”的反差。
+
+9. 对接方式说明
+写成副本官方接口文档。
+包含：
+- 对接口径；
+- 适配姿势；
+- 插入深度；
+- 润滑条件；
+- 体液回流；
+- 过载反应；
+- 多轮对接后的变化；
+- 对接失败处理；
+- 对接成功提示；
+- Boss 私有认证流程。
+
+需要兼具技术说明感和色情羞耻感。
+像是在写系统接口，其实每一行都在描述 Boss 怎么操、怎么灌、怎么把目标调成自己的专属入口。
+
+10. 通关失败范本
+描写目标不按规则行事后，被 Boss 亲自“纠正”的过程。
+写成报纸警示案例。
+例如：
+- 试图逃跑；
+- 偷看规则背面；
+- 拒绝进入 Boss 指定房间；
+- 没有按时完成对接；
+- 把 Boss 标记擦掉；
+- 在小怪面前装作自己没被操过。
+
+失败如何转化成更深层的 Boss 私有路线。
+小怪们必须一边害怕一边吃瓜。
+
+11. 推荐通关流程
+按时间 / 场景顺序列出完整流程。
+每一步都像攻略，但越读越像 Boss 写给自己享用目标的说明书。
+最后让读者意识到：
+所谓通关，可能根本不是逃出去，而是被 Boss 完全认证为副本专属物。
+
+流程可以包括：
+- 入场登记；
+- 第一次误触规则；
+- 被小怪引到错误走廊；
+- 被 Boss 抓住；
+- 第一次私有标记；
+- 多场景对接；
+- 羞耻值提升；
+- 规则身份改写；
+- 通关门出现；
+- 通关门变成 Boss 私有房门；
+- 最终认证。
+
+12. 结尾页 / 最终提示
+旧报纸最后一页出现手写批注。
+批注暗示递报纸的男人就是最终 Boss。
+结尾不要完全收束，要留下诡异、羞耻、即将被 Boss 找到的余韵。
+可以出现类似：
+“你已经读完规则，所以视为同意进入隐藏路线。”
+“请把报纸叠好放在枕边。Boss 会亲自来检查阅读痕迹。”
+“别骂小怪，我们只是负责送报。真正写批注的人，在你身后。”
+“下一期：《Boss 为什么又把逃生门改成床头柜》。”
+
+13. 下一期预告 / 异常附录 / 小怪投诉区
+可以加入：
+- 洗衣房投诉；
+- 墙体维修单；
+- 床单怪崩溃记录；
+- 门禁鬼加班日志；
+- 监控灵体删片失败报告；
+- 小怪匿名问答；
+- Boss 私有备注；
+- 下一期桃色预告。
+
+【分页结构建议】
+可以参考以下结构，但不要机械照抄。
+AI 应根据内容长度和版面自动拆分，不得硬塞。
+每页只承载一个核心爆点或一个核心板块。
+
+第 1 页：封面 / 港媒式桃色大头条 / 副本危险信息 / 爆点汇总
+第 2 页：副本简介 / 误入经过 / Boss 第一次出现 / 小怪首次吃瓜
+第 3 页：基础生存规则上半部分
+第 4 页：基础生存规则下半部分 / 小怪批注
+第 5 页：Boss 开小灶规则 / 正常通关 VS Boss 私有通关
+第 6 页：副本场景列表上半部分
+第 7 页：副本场景列表下半部分
+第 8 页：Boss 档案上半部分：外观、正常技能、正常数据
+第 9 页：Boss 档案下半部分：色色技能、鸡巴数据、体液数据、特殊偏好
+第 10 页：官方对接接口文档上半部分
+第 11 页：官方对接接口文档下半部分 / 过载与认证
+第 12 页：通关失败范本
+第 13 页：推荐通关流程
+第 14 页：最终提示 / 手写批注 / 隐藏路线开启
+第 15 页：下一期预告 / 异常附录 / 小怪投诉区
+
+如果内容较少，可以合并为 10～12 页。
+如果内容较多，可以扩展到 15 页。
+不要为了减少页数导致文字溢出。
+
+【每页吃瓜模块】
+每页都可以设置一个“小怪匿名吐槽 / 墙缝投稿 / 洗衣房骂街 / 门禁鬼低语 / 监控灵体截图说明”模块。
+内容必须轻松、诙谐、下流、直接。
+示例语气：
+- “我先声明，我不是故意看的，我是被 Boss 按在墙里当承重点的。”
+- “别问为什么墙会脸红，今天那屁股贴上来的时候我差点裂开。”
+- “洗衣房第八条床单了，谁懂啊，老板谈恋爱，牛马遭殃。”
+- “监控室已经删不动了，Boss 说不用删，留着做下次羞耻值校准。”
+- “我就说逃生门怎么天天改位置，合着是为了把人骗回床边。”
+
+【防止文字溢出：最高优先级】
+- 每一页必须严格控制在单页 9:16 可视区域内；
+- 所有文字、表格、批注、印章都不得超出旧报纸边框；
+- 页面内容不能依赖滚动条；
+- 不能出现文字被底部按钮遮挡、表格被裁切、正文超出纸张范围；
+- 普通页面控制在 500～600 中文字以内；
+- 表格页控制在 5～7 行以内；
+- Boss 数据页、技能页、接口文档如内容较多，必须拆页；
+- 如果某一板块内容过长，必须自动分页，不允许硬塞；
+- 版面优先级高于字数密度，宁可增加页数、拆分板块，也不能让内容溢出。
+
+【表格与 CSS 硬性要求】
+- .page 必须设置 overflow: hidden；
+- 页面正文容器必须预留底部按钮安全区；
+- 如果有 .page-content，高度设置为 calc(100% - 90px) 或类似安全高度；
+- 页面内部安全内边距：上方至少 24px，左右至少 18px，底部至少 90px；
+- 表格必须 table-layout: fixed; width: 100%; border-collapse: collapse;
+- 表格单元格必须 word-break: break-word; overflow-wrap: anywhere; vertical-align: top;
+- 表格列数不超过 2～3 列；
+- 表格内容必须短句化，禁止长句堆满单元格；
+- 翻页按钮必须放在页面外部或页面底部固定安全区，不能遮挡正文；
+- 手机预览时不得出现正文截断、表格掉出纸面、页码压住内容等问题。
+
+【内容密度要求】
+- 每页只承载一个核心板块或一个核心爆点；
+- 不要把 Boss 档案、技能说明、接口文档塞在同一页；
+- 不要为了满足“内容完整”而牺牲版面可读性；
+- 旧报纸可以有密集感，但不能变成无法阅读的文字墙；
+- 每页至少保留少量留白；
+- 如果某页内容较满，减少装饰元素，优先保证正文完整显示。
+
+【HTML 交互要求】
+- 单文件 HTML；
+- 内含 CSS 与 JS；
+- 不依赖任何外部字体、图片、脚本；
+- 支持点击翻页；
+- 支持上一页 / 下一页；
+- 显示当前页码；
+- 页面必须居中显示；
+- 竖屏 9:16；
+- 旧报纸边框完整；
+- 翻页时可有轻微纸张翻动、抖动、闪烁、污渍浮现等效果；
+- 不要使用滚动条承载正文内容。
+
+【输出要求】
+- 直接输出完整 HTML；
+- 必须用完整代码段包裹；
+- 不要解释；
+- 不要额外说明；
+- 不要省略页面；
+- 最终 HTML 必须能直接复制运行；
+- 所有内容围绕同一个具体副本展开；
+- 结尾保留可继续扩展下一期报纸的余地；
+- 最终页面必须确保所有文字都在报纸范围内完整显示，不得溢出、裁切或被按钮遮挡。</pre>
+        </section>
+        <div class="meta">
+          <span class="tag" id="count">6495 字</span>
+          <span>single file · no external resources</span>
+        </div>
+      </main>
+    </article>
+  </section>
+</div>
+<script>
+const pre=document.getElementById("promptText");
+const statusEl=document.getElementById("status");
+async function copyPrompt(){
+ const text=pre.textContent;
+ try{
+  await navigator.clipboard.writeText(text);
+  statusEl.textContent="已复制全文。";
+ }catch(e){
+  const range=document.createRange();
+  range.selectNodeContents(pre);
+  const sel=window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  try{
+    document.execCommand("copy");
+    statusEl.textContent="已选中并复制。";
+  }catch(err){
+    statusEl.textContent="浏览器拦截复制，已选中全文，请手动复制。";
+  }
+ }
+ setTimeout(()=>statusEl.textContent="",2600);
+}
+function selectPrompt(){
+ const range=document.createRange();
+ range.selectNodeContents(pre);
+ const sel=window.getSelection();
+ sel.removeAllRanges();
+ sel.addRange(range);
+ statusEl.textContent="已选中全文。";
+ setTimeout(()=>statusEl.textContent="",2200);
+}
+document.getElementById("copyBtn").addEventListener("click",copyPrompt);
+document.getElementById("selectBtn").addEventListener("click",selectPrompt);
+</script>
+</body>
+</html>
