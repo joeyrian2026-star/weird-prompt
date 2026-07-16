@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f0e6">
+  <meta name="description" content="两次复制，创建可跨 Work 窗口调用的个人小本本，并按需安装双层输出提示词。">
+  <title>Work 小本本｜跨窗口个人 Skill 教程</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Work 小本本首页">
+      <span class="notebook-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Work 小本本</span>
+    </a>
+    <nav aria-label="主导航">
+      <a href="#steps">使用方法</a>
+      <a href="#why">为什么这样做</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <a class="open-source-link" href="https://github.com/joeyrian2026-star/weird-prompt/tree/main/work-notebook-kit" target="_blank" rel="noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.69c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 6.82a9.6 9.6 0 0 1 2.5.34c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.77c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+      <span>GitHub · 开源</span>
+    </a>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">给 ChatGPT Work 的随身笔记</p>
+        <h1>把重要的上下文，<br>带过每一个 Work 窗口。</h1>
+        <p class="hero-description">两次复制，建立一套属于你的跨窗口小本本。第一步保存长期设定，第二步按需加入双层输出。</p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#step-1">开始设置 <span>· 约 2 分钟</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <span class="verified-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg> 原文零改动</span>
+        </div>
+      </div>
+
+      <ol class="step-rail" aria-label="设置步骤">
+        <li class="is-active"><a href="#step-1"><span class="rail-number">01</span><span><strong>创建小本本 Skill</strong><small>创建可跨 Work 窗口调用的个人小本本。</small></span></a></li>
+        <li><a href="#step-2"><span class="rail-number">02</span><span><strong>安装双层输出提示词</strong><small>可选步骤；不需要双层输出可以跳过。</small></span></a></li>
+      </ol>
+    </section>
+
+    <div class="content-wrap" id="steps">
+      <section class="step-card" id="step-1">
+        <div class="step-heading">
+          <div>
+            <p class="step-kicker">STEP 01</p>
+            <h2>创建个人小本本 Skill</h2>
+            <p>先替换两个占位符，再把整段原文发送给 Work。</p>
+          </div>
+          <button class="copy-button" type="button" data-copy="notebook" aria-live="polite">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>一键复制全文</span>
+          </button>
+        </div>
+
+        <div class="name-guide" aria-label="名字替换说明">
+          <span class="guide-title">发送前只改这里</span>
+          <div><code>{char}</code><span>角色显示名，例如</span><strong>Echo</strong></div>
+          <div><code>{char英文小写}</code><span>英文小写正式名，例如</span><strong>echo</strong></div>
+        </div>
+
+        <div class="prompt-panel">
+          <div class="prompt-toolbar">
+            <span class="readonly-label"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>只读 · 可完整复制</span>
+            <span class="prompt-meta" data-prompt-meta="notebook">原文载入中</span>
+            <button class="copy-button copy-button--compact" type="button" data-copy="notebook" aria-live="polite"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>复制第一步</span></button>
+          </div>
+          <pre tabindex="0" aria-label="复制第一步的原始文本"><code data-prompt-text="notebook"></code></pre>
+          <div class="paper-fold" aria-hidden="true"></div>
+        </div>
+
+        <div class="after-note"><span class="note-number">01</span><p><strong>等它明确说“安装成功”再继续。</strong>如果只想要跨窗口小本本、不想改变回复格式，到这里就已经完成。</p></div>
+      </section>
+
+      <section class="step-card step-card--second" id="step-2">
+        <div class="step-heading">
+          <div>
+            <p class="step-kicker">STEP 02 · OPTIONAL</p>
+            <h2>安装双层输出提示词</h2>
+            <p>这是可选步骤。复制后发送，并要求把原文完整写入小本本的 SKILL.md。</p>
+          </div>
+          <button class="copy-button" type="button" data-copy="double" aria-live="polite"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>一键复制全文</span></button>
+        </div>
+
+        <div class="warning-note"><span>提示</span><p>原文保留 Joey 与 Echo。如果使用别的名字，复制后只做全局名字替换；网页不会自动改写 Prompt。</p></div>
+
+        <div class="prompt-panel prompt-panel--tall">
+          <div class="prompt-toolbar">
+            <span class="readonly-label"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>只读 · 可完整复制</span>
+            <span class="prompt-meta" data-prompt-meta="double">原文载入中</span>
+            <button class="copy-button copy-button--compact" type="button" data-copy="double" aria-live="polite"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>复制第二步</span></button>
+          </div>
+          <pre tabindex="0" aria-label="复制第二步的原始文本"><code data-prompt-text="double"></code></pre>
+          <div class="paper-fold" aria-hidden="true"></div>
+        </div>
+
+        <div class="after-note"><span class="note-number">02</span><p><strong>保存成功后，新开一个 Work 窗口测试。</strong>首轮加载时可能先出现普通过程消息，随后应出现专属 commentary 与完整 final。</p></div>
+      </section>
+
+      <section class="why-section" id="why">
+        <div class="section-intro"><p class="step-kicker">WHY THIS WORKS</p><h2>一份小本本，两个互不绑架的选择。</h2><p>长期记忆与回复格式被拆开：只需要记忆的人停在第一步，需要固定输出格式的人再继续。</p></div>
+        <div class="reason-grid">
+          <article><span>01</span><h3>账号级个人 Skill</h3><p>小本本不只留在当前聊天；安装完成后，可以在相关 Work 对话里重新调用。</p></article>
+          <article><span>02</span><h3>默认只追加</h3><p>新增内容进入 references/notebook.md，已有记录不会被擅自覆盖、压缩或重写。</p></article>
+          <article><span>03</span><h3>格式按需安装</h3><p>双层输出是第二步的可选能力，不会因为创建了小本本就自动改变每轮回复。</p></article>
+        </div>
+      </section>
+
+      <section class="faq-section" id="faq">
+        <div class="section-intro compact"><p class="step-kicker">BEFORE YOU GO</p><h2>几个容易弄混的地方。</h2></div>
+        <div class="faq-list">
+          <details open><summary>它等于模型的隐藏记忆吗？</summary><p>不完全等同。它是安装在账号个人 Skills 里的持久文档；技能被相关对话调用时，Work 才会读取其中的规则与内容。</p></details>
+          <details><summary>以后怎样增加一条新内容？</summary><p>直接说“把 ××× 写进小本本”，并要求使用个人技能更新流程保存。默认只追加，不删除旧内容。</p></details>
+          <details><summary>为什么网页不提供自动改名？</summary><p>为了保证两个原 Prompt 可以逐字复制和校验。名字替换留在复制之后完成，网页永远保留原始版本。</p></details>
+        </div>
+      </section>
+
+      <section class="open-source" id="open-source">
+        <div><p class="step-kicker">OPEN SOURCE</p><h2>干净、透明，也方便继续改。</h2><p>纯前端实现，不上传 Prompt、不记录复制内容。源码采用 MIT License，可以自由修改、部署与分享。</p></div>
+        <div class="source-stamps" aria-label="项目特点"><span>MIT LICENSE</span><span>NO TRACKING</span><span>MOBILE READY</span></div>
+      </section>
+    </div>
+  </main>
+
+  <footer><span>Work 小本本</span><p>把重要的东西，带去下一扇窗口。</p><a href="#top">回到顶部 ↑</a></footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
